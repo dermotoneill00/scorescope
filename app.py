@@ -1,4 +1,3 @@
-
 import streamlit as st
 import os
 from datetime import datetime
@@ -11,13 +10,72 @@ from utils.ai import get_ai_feedback, parse_scores_enhanced, extract_enhanced_fe
 from utils.visuals import create_enhanced_radar_chart, create_score_history_chart
 from utils.helpers import get_score_color_class, calculate_weighted_score, get_file_hash
 
-# === Page Configuration ===
-st.set_page_config(
-    page_title="ScoreScope AI",
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
+# === Page Config ===
+st.set_page_config(page_title="ScoreScope AI", layout="wide", initial_sidebar_state="expanded")
 
+# === Global CSS Styling ===
+st.markdown("""
+<style>
+html, body, [class*="css"] {
+    font-family: 'Inter', sans-serif;
+    background-color: #0a0a0a;
+    color: #ffffff;
+}
+.main-header {
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    padding: 2rem;
+    border-radius: 12px;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+.main-header h1 {
+    font-size: 42px;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+}
+.main-header p {
+    font-size: 16px;
+    opacity: 0.85;
+    margin: 0;
+}
+.upload-section {
+    border: 2px dashed #666;
+    border-radius: 12px;
+    padding: 2rem;
+    background-color: #121212;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+.feedback-section {
+    background: #111;
+    border: 1px solid #333;
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-top: 1rem;
+}
+.metric-container {
+    background: #1a1a1a;
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    margin-bottom: 1rem;
+}
+.score-excellent { border-left: 5px solid #28a745; }
+.score-good { border-left: 5px solid #17a2b8; }
+.score-average { border-left: 5px solid #ffc107; }
+.score-poor { border-left: 5px solid #dc3545; }
+button[kind="primary"] {
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-weight: bold;
+    border-radius: 8px;
+}
+</style>
+""", unsafe_allow_html=True)
+
+# === Default Categories ===
 DEFAULT_CATEGORIES = {
     "Requirements Fulfillment": 25,
     "Content Quality & Depth": 20,
@@ -27,55 +85,15 @@ DEFAULT_CATEGORIES = {
     "Presentation & Format": 10
 }
 
-# === Custom Branding ===
-st.markdown("""
-    <style>
-    .main-header {
-        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-        padding: 2rem;
-        border-radius: 10px;
-        color: white;
-        margin-bottom: 2rem;
-        text-align: center;
-    }
-    .upload-section {
-        border: 2px dashed #cccccc;
-        border-radius: 10px;
-        padding: 2rem;
-        text-align: center;
-        margin: 1rem 0;
-    }
-    .feedback-section {
-        background: #f8f9fa;
-        padding: 1.5rem;
-        border-radius: 8px;
-        margin: 1rem 0;
-    }
-    .metric-container {
-        background: white;
-        padding: 1rem;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        margin: 0.5rem 0;
-    }
-    .score-excellent { border-left: 4px solid #28a745; }
-    .score-good { border-left: 4px solid #17a2b8; }
-    .score-average { border-left: 4px solid #ffc107; }
-    .score-poor { border-left: 4px solid #dc3545; }
-    </style>
-""")
-
-# === Main Header ===
+# === Header ===
 st.markdown("""
 <div class="main-header">
-    <h1 style="color: white; font-size: 42px; font-weight: 600; margin-bottom: 0.5rem; letter-spacing: -0.5px;">
-        ScoreScope<span style="font-size: 0.6em; vertical-align: super; font-weight: normal;">ai</span>
-    </h1>
-    <p style="color: rgba(255,255,255,0.9); font-size: 18px; margin: 0;">Upload your work and get comprehensive, AI-powered evaluation with actionable insights</p>
+    <h1>ScoreScope<span style="font-size: 0.6em; vertical-align: super; font-weight: normal;">ai</span></h1>
+    <p>Upload your work and get comprehensive, AI-powered evaluation with actionable insights</p>
 </div>
-""")
+""", unsafe_allow_html=True)
 
-# === Sidebar ===
+# === Sidebar Configuration ===
 with st.sidebar:
     st.header("Configuration")
     eval_style = st.selectbox("Evaluation Style", ["balanced", "strict", "encouraging"])
@@ -87,7 +105,7 @@ with st.sidebar:
             with col1:
                 cat_name = st.text_input(f"Category {i+1}", value=cat, key=f"cat_{i}")
             with col2:
-                cat_weight = st.number_input(f"Weight", value=weight, min_value=1, max_value=50, key=f"weight_{i}")
+                cat_weight = st.number_input("Weight", value=weight, min_value=1, max_value=50, key=f"weight_{i}")
             if cat_name:
                 categories[cat_name] = cat_weight
         if sum(categories.values()) != 100:
@@ -99,7 +117,7 @@ with st.sidebar:
         max_pages = st.slider("Max pages to analyze", 5, 30, 15)
         show_raw_response = st.checkbox("Show raw AI response")
 
-# === Main Content ===
+# === Upload & Task Input ===
 col1, col2 = st.columns([1, 1])
 with col1:
     st.subheader("Task Instructions")
@@ -137,18 +155,23 @@ if st.button("Analyze with ScoreScope AI"):
 
         st.header("Evaluation Results")
         score_class = get_score_color_class(weighted_score)
-        st.markdown(f'''
+        st.markdown(f"""
         <div class="metric-container {score_class}">
-            <h2 style="text-align: center; margin: 0; background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-                -webkit-background-clip: text; -webkit-text-fill-color: transparent; color: transparent;">
-                Overall Score
-            </h2>
-            <h1 style="text-align: center; margin: 0; color: #000000;">{weighted_score}/10</h1>
+            <h2 style="
+                text-align: center;
+                background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                color: transparent;
+                margin: 0;
+            ">Overall Score</h2>
+            <h1 style="text-align: center; margin: 0;">{weighted_score}/10</h1>
             <p style="text-align: center; margin: 0; opacity: 0.7;">Processed in {time.time() - start_time:.1f}s</p>
         </div>
-        ''', unsafe_allow_html=True)
+        """, unsafe_allow_html=True)
 
         st.plotly_chart(create_enhanced_radar_chart(scores), use_container_width=True)
+
         st.subheader("Detailed Category Analysis")
         for category, (score, explanation) in scores.items():
             with st.expander(f"{category}: {score}/10"):
@@ -163,10 +186,9 @@ if st.button("Analyze with ScoreScope AI"):
             st.markdown(f"**{i}.** {action}")
         st.markdown('</div>', unsafe_allow_html=True)
 
-        # History
+        # === History ===
         if "evaluation_history" not in st.session_state:
             st.session_state.evaluation_history = []
-
         st.session_state.evaluation_history.append({
             "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M"),
             "overall_score": weighted_score,
@@ -179,7 +201,7 @@ if st.button("Analyze with ScoreScope AI"):
             df_history = pd.DataFrame(st.session_state.evaluation_history)
             st.dataframe(df_history, use_container_width=True)
 
-        # Export Options
+        # === Export ===
         with st.expander("Export Results"):
             col1, col2 = st.columns(2)
             with col1:
@@ -190,10 +212,16 @@ if st.button("Analyze with ScoreScope AI"):
                     "feedback": feedback_data,
                     "timestamp": datetime.now().isoformat()
                 }
-                st.download_button("Download (JSON)", data=json.dumps(export_data, indent=2), file_name="scorescope_results.json", mime="application/json")
+                st.download_button("Download (JSON)", data=json.dumps(export_data, indent=2),
+                                   file_name="scorescope_results.json", mime="application/json")
             with col2:
-                report = f"""EVALUATION REPORT\n\nOverall Score: {weighted_score}/10\n\nCATEGORY SCORES:\n""" +                          "\n".join([f"- {cat}: {score}/10" for cat, (score, _) in scores.items()]) +                          f"\n\nASSESSMENT:\n{feedback_data['overall']}\n\nACTION PLAN:\n" +                          "\n".join([f"{i}. {a}" for i, a in enumerate(feedback_data['actions'], 1)])
-                st.download_button("Download (TXT)", data=report, file_name="scorescope_report.txt", mime="text/plain")
+                report = f"""EVALUATION REPORT\n\nOverall Score: {weighted_score}/10\n\nCATEGORY SCORES:\n""" + \
+                         "\n".join([f"- {cat}: {score}/10" for cat, (score, _) in scores.items()]) + \
+                         f"\n\nASSESSMENT:\n{feedback_data['overall']}\n\nACTION PLAN:\n" + \
+                         "\n".join([f"{i}. {a}" for i, a in enumerate(feedback_data['actions'], 1)])
+                st.download_button("Download (TXT)", data=report,
+                                   file_name="scorescope_report.txt", mime="text/plain")
+
         if show_raw_response:
             with st.expander("Raw AI Response"):
                 st.text(ai_response)
