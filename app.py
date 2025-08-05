@@ -12,17 +12,16 @@ from utils.helpers import get_score_color_class, calculate_weighted_score, get_f
 
 # Page Config - Must be first
 st.set_page_config(
-    page_title="ScoreScope AI - Portfolio Demo",
-    page_icon="⚡",
+    page_title="ScoreScope AI",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
 
-# Enhanced CSS with portfolio-grade styling
-def load_enhanced_css():
+# Clean CSS for embedding
+def load_clean_css():
     st.markdown("""
     <style>
-    /* Hide Streamlit branding completely */
+    /* Hide all Streamlit branding and UI elements */
     #MainMenu {visibility: hidden;}
     .stDeployButton {display: none;}
     footer {visibility: hidden;}
@@ -34,72 +33,19 @@ def load_enhanced_css():
     
     /* Global app styling */
     .stApp {
-        background: #000000;
+        background: transparent;
         font-family: 'Figtree', sans-serif;
         color: #ffffff;
     }
     
-    /* Custom header section */
-    .header-container {
-        background: rgba(20, 20, 20, 0.95);
-        backdrop-filter: blur(20px);
-        border: 1px solid rgba(129, 74, 200, 0.2);
-        border-radius: 16px;
-        padding: 32px;
-        margin-bottom: 32px;
-        text-align: center;
-        position: relative;
-        overflow: hidden;
+    /* Remove default padding for clean embedding */
+    .block-container {
+        padding-top: 1rem !important;
+        padding-bottom: 1rem !important;
+        max-width: 100% !important;
     }
     
-    .header-container::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 1px;
-        background: linear-gradient(90deg, transparent, #814AC8, transparent);
-    }
-    
-    .logo-section {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 16px;
-        margin-bottom: 16px;
-    }
-    
-    .logo-icon {
-        width: 48px;
-        height: 48px;
-        background: linear-gradient(135deg, #814AC8 0%, #5B4FC7 100%);
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 24px;
-        box-shadow: 0 8px 32px rgba(129, 74, 200, 0.3);
-    }
-    
-    .main-title {
-        font-size: 48px;
-        font-weight: 800;
-        background: linear-gradient(135deg, #ffffff 0%, rgba(255, 255, 255, 0.8) 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        margin: 0;
-        letter-spacing: -1px;
-    }
-    
-    .main-subtitle {
-        font-size: 18px;
-        color: rgba(255, 255, 255, 0.7);
-        margin: 8px 0 0 0;
-        font-weight: 400;
-    }
-    
-    /* Main content cards */
+    /* Content cards */
     .content-card {
         background: rgba(20, 20, 20, 0.9);
         border: 1px solid rgba(129, 74, 200, 0.3);
@@ -108,18 +54,6 @@ def load_enhanced_css():
         margin-bottom: 24px;
         backdrop-filter: blur(20px);
         box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .content-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 2px;
-        background: linear-gradient(90deg, transparent, rgba(129, 74, 200, 0.5), transparent);
     }
     
     .section-title {
@@ -162,7 +96,14 @@ def load_enhanced_css():
         background: rgba(255, 255, 255, 0.08) !important;
     }
     
-    /* Enhanced file uploader */
+    .stTextArea label {
+        color: rgba(255, 255, 255, 0.9) !important;
+        font-weight: 600 !important;
+        font-size: 16px !important;
+        margin-bottom: 8px !important;
+    }
+    
+    /* File uploader styling */
     .stFileUploader > div {
         background: rgba(129, 74, 200, 0.08) !important;
         border: 2px dashed rgba(129, 74, 200, 0.4) !important;
@@ -207,10 +148,6 @@ def load_enhanced_css():
         background: linear-gradient(135deg, #9557e5 0%, #6f4fc7 100%) !important;
     }
     
-    .stButton > button:active {
-        transform: translateY(-1px) !important;
-    }
-    
     /* Results styling */
     .results-container {
         background: rgba(20, 20, 20, 0.9);
@@ -229,18 +166,6 @@ def load_enhanced_css():
         border-radius: 20px;
         border: 1px solid rgba(129, 74, 200, 0.3);
         margin: 24px 0;
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .score-display::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 2px;
-        background: linear-gradient(90deg, #814AC8, #A855F7, #814AC8);
     }
     
     .overall-score {
@@ -259,51 +184,6 @@ def load_enhanced_css():
         color: rgba(255, 255, 255, 0.6);
         margin-top: 12px;
         font-weight: 500;
-    }
-    
-    /* Category analysis styling */
-    .category-container {
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(129, 74, 200, 0.2);
-        border-left: 4px solid #814AC8;
-        border-radius: 12px;
-        padding: 20px;
-        margin: 12px 0;
-        transition: all 0.3s ease;
-    }
-    
-    .category-container:hover {
-        background: rgba(255, 255, 255, 0.05);
-        border-left-width: 6px;
-        transform: translateX(4px);
-    }
-    
-    .category-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 12px;
-    }
-    
-    .category-name {
-        font-size: 18px;
-        font-weight: 600;
-        color: rgba(255, 255, 255, 0.9);
-    }
-    
-    .category-score {
-        font-size: 20px;
-        font-weight: 700;
-        color: #814AC8;
-        background: rgba(129, 74, 200, 0.1);
-        padding: 4px 12px;
-        border-radius: 8px;
-    }
-    
-    .category-weight {
-        font-size: 14px;
-        color: rgba(255, 255, 255, 0.6);
-        margin-bottom: 8px;
     }
     
     /* Processing animation */
@@ -337,7 +217,7 @@ def load_enhanced_css():
         height: 8px !important;
     }
     
-    /* Success message styling */
+    /* Alert styling */
     .stSuccess {
         background: rgba(76, 175, 80, 0.1) !important;
         border: 1px solid rgba(76, 175, 80, 0.3) !important;
@@ -346,7 +226,6 @@ def load_enhanced_css():
         font-weight: 600 !important;
     }
     
-    /* Info message styling */
     .stInfo {
         background: rgba(33, 150, 243, 0.1) !important;
         border: 1px solid rgba(33, 150, 243, 0.3) !important;
@@ -355,7 +234,6 @@ def load_enhanced_css():
         font-weight: 600 !important;
     }
     
-    /* Error message styling */
     .stError {
         background: rgba(244, 67, 54, 0.1) !important;
         border: 1px solid rgba(244, 67, 54, 0.3) !important;
@@ -370,14 +248,6 @@ def load_enhanced_css():
         border-right: 1px solid rgba(129, 74, 200, 0.2) !important;
     }
     
-    .stSidebar .stSelectbox label,
-    .stSidebar .stCheckbox label,
-    .stSidebar .stTextInput label,
-    .stSidebar .stNumberInput label {
-        color: rgba(255, 255, 255, 0.9) !important;
-        font-weight: 600 !important;
-    }
-    
     /* Download button styling */
     .stDownloadButton > button {
         background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%) !important;
@@ -386,6 +256,7 @@ def load_enhanced_css():
         border-radius: 8px !important;
         padding: 12px 24px !important;
         font-weight: 600 !important;
+        font-family: 'Figtree', sans-serif !important;
         transition: all 0.3s ease !important;
     }
     
@@ -399,19 +270,14 @@ def load_enhanced_css():
         background: rgba(255, 255, 255, 0.03) !important;
         border-radius: 8px !important;
         border: 1px solid rgba(129, 74, 200, 0.2) !important;
+        color: rgba(255, 255, 255, 0.9) !important;
+        font-weight: 600 !important;
     }
     
     /* Chart container */
     .stPlotlyChart {
         background: transparent !important;
         border-radius: 16px !important;
-    }
-    
-    /* Custom spacing */
-    .block-container {
-        padding-top: 2rem !important;
-        padding-bottom: 2rem !important;
-        max-width: 1200px !important;
     }
     
     /* Animations */
@@ -437,43 +303,19 @@ def load_enhanced_css():
     
     /* Mobile responsiveness */
     @media (max-width: 768px) {
-        .main-title {
-            font-size: 36px;
+        .content-card {
+            padding: 24px;
         }
         
         .overall-score {
             font-size: 48px;
         }
-        
-        .content-card {
-            padding: 24px;
-        }
-        
-        .header-container {
-            padding: 24px;
-        }
     }
     </style>
     """, unsafe_allow_html=True)
 
-def create_header():
-    st.markdown("""
-    <div class="header-container">
-        <div class="logo-section">
-            <div class="logo-icon">⚡</div>
-            <div>
-                <h1 class="main-title">ScoreScope<sup style="font-size: 20px; opacity: 0.8;">AI</sup></h1>
-                <p class="main-subtitle">AI-Powered PDF Evaluation and Scoring Platform</p>
-            </div>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-
-# Load enhanced styling
-load_enhanced_css()
-
-# Create header
-create_header()
+# Load clean styling
+load_clean_css()
 
 # Default categories with weights
 DEFAULT_CATEGORIES = {
@@ -485,7 +327,7 @@ DEFAULT_CATEGORIES = {
     "Presentation & Format": 10
 }
 
-# Sidebar configuration (collapsed by default for clean look)
+# Sidebar configuration (collapsed by default for clean embedding)
 with st.sidebar:
     st.markdown("### Configuration")
     eval_style = st.selectbox("Evaluation Style", ["balanced", "strict", "encouraging"])
@@ -510,17 +352,14 @@ with st.sidebar:
         max_pages = st.slider("Max pages to analyze", 5, 30, 15)
         show_raw_response = st.checkbox("Show raw AI response")
 
-# Main content area
+# Main content area - clean layout for embedding
 col1, col2 = st.columns([1, 1], gap="large")
 
 # Task Instructions section
 with col1:
     st.markdown("""
     <div class="content-card">
-        <h2 class="section-title">
-            <div class="section-icon">📝</div>
-            Task Instructions
-        </h2>
+        <h2 class="section-title">Task Instructions</h2>
     </div>
     """, unsafe_allow_html=True)
     
@@ -536,10 +375,7 @@ with col1:
 with col2:
     st.markdown("""
     <div class="content-card">
-        <h2 class="section-title">
-            <div class="section-icon">📄</div>
-            Upload Your Work
-        </h2>
+        <h2 class="section-title">Upload Your Work</h2>
     </div>
     """, unsafe_allow_html=True)
     
@@ -581,7 +417,7 @@ if uploaded_pdf and task_outline:
         for i, step in enumerate(steps):
             status_text.text(step)
             progress_bar.progress((i + 1) * 20)
-            time.sleep(0.6)  # Realistic processing feel
+            time.sleep(0.6)
         
         # Extract and analyze
         submission_text = extract_text_from_pdf(file_hash, uploaded_pdf, max_pages)
@@ -705,48 +541,3 @@ ACTION PLAN:
 
 elif uploaded_pdf or task_outline:
     st.info("Please provide both task instructions and upload a PDF to begin analysis.")
-else:
-    # Demo section when no inputs
-    st.markdown("---")
-    st.markdown("### See ScoreScope in Action")
-    
-    col1, col2, col3 = st.columns(3)
-    
-    with col1:
-        st.metric("Average Processing", "19.2s", "Fast Analysis")
-    
-    with col2:
-        st.metric("Scoring Categories", "6", "Comprehensive")
-    
-    with col3:
-        st.metric("Maximum File Size", "200MB", "Large Documents")
-    
-    st.markdown("### Perfect For:")
-    
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        st.markdown("""
-        **Job Seekers**
-        - Resume optimization and feedback
-        - Cover letter evaluation
-        - Application materials review
-        
-        **Students**
-        - Assignment scoring and improvement
-        - Essay evaluation and guidance
-        - Project assessment
-        """)
-    
-    with col2:
-        st.markdown("""
-        **Startups and Professionals**
-        - Pitch deck review and refinement
-        - Business plan evaluation
-        - Grant application scoring
-        
-        **Hiring Teams**
-        - Take-home assignment evaluation
-        - Portfolio assessment
-        - Interview material review
-        """)
