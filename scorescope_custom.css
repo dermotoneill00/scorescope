@@ -1,49 +1,66 @@
-
 /* === ScoreScope Branding === */
 body {
     background-color: #000000;
     font-family: 'Figtree', sans-serif;
     color: #FFFFFF;
+    margin: 0;
 }
 
+/* Headings */
 h1, h2, h3, h4 {
     font-family: 'Figtree', sans-serif;
     color: #FFFFFF;
+    margin-bottom: 0.5rem;
 }
 
 h1 {
     font-size: 70px;
+    font-weight: 700;
+    letter-spacing: -1px;
 }
 
+/* Paragraphs and smaller text */
 p, label, span {
     color: #8A8181;
+    font-size: 16px;
 }
 
-/* Apply to all Streamlit buttons */
+/* === Buttons === */
 button {
     background: linear-gradient(90deg, #814AC8, #667eea);
     color: #ffffff !important;
+    font-family: 'Figtree', sans-serif;
     font-weight: 600;
     border: none;
     border-radius: 8px;
     padding: 0.75rem 1.5rem;
-    transition: background 0.3s ease;
+    font-size: 16px;
+    transition: all 0.3s ease;
 }
 
-/* Optional: button hover effect */
 button:hover {
     background: linear-gradient(90deg, #6f3ab2, #566bdc);
+    transform: scale(1.02);
     cursor: pointer;
 }
 
-
-input[type="file"], textarea {
+/* === Inputs === */
+input[type="file"], textarea, input[type="text"] {
     background-color: #111111 !important;
     color: white !important;
     border: 1px solid #814AC8 !important;
     border-radius: 6px !important;
+    padding: 0.5rem;
+    font-family: 'Figtree', sans-serif;
+    font-size: 14px;
 }
 
+/* === Layout === */
 section.main > div {
     padding: 2rem;
+}
+
+/* Optional: Adjust sidebar font */
+.sidebar .css-1v3fvcr {
+    font-family: 'Figtree', sans-serif;
 }
