@@ -21,13 +21,6 @@ html, body, [class*="css"] {
     background-color: #0a0a0a;
     color: #ffffff;
 }
-.main-header {
-    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-    padding: 2rem;
-    border-radius: 12px;
-    text-align: center;
-    margin-bottom: 2rem;
-}
 .main-header h1 {
     font-size: 42px;
     font-weight: 700;
