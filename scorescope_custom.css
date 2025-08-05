@@ -1,0 +1,38 @@
+
+/* === ScoreScope Branding === */
+body {
+    background-color: #000000;
+    font-family: 'Figtree', sans-serif;
+    color: #FFFFFF;
+}
+
+h1, h2, h3, h4 {
+    font-family: 'Figtree', sans-serif;
+    color: #FFFFFF;
+}
+
+h1 {
+    font-size: 70px;
+}
+
+p, label, span {
+    color: #8A8181;
+}
+
+button {
+    background-color: #814AC8 !important;
+    color: white !important;
+    border-radius: 6px !important;
+    font-weight: bold;
+}
+
+input[type="file"], textarea {
+    background-color: #111111 !important;
+    color: white !important;
+    border: 1px solid #814AC8 !important;
+    border-radius: 6px !important;
+}
+
+section.main > div {
+    padding: 2rem;
+}

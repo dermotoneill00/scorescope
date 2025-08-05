@@ -13,60 +13,9 @@ from utils.helpers import get_score_color_class, calculate_weighted_score, get_f
 # === Page Config ===
 st.set_page_config(page_title="ScoreScope AI", layout="wide", initial_sidebar_state="expanded")
 
-# === Global CSS Styling ===
-st.markdown("""
-<style>
-html, body, [class*="css"] {
-    font-family: 'Inter', sans-serif;
-    background-color: #0a0a0a;
-    color: #ffffff;
-}
-.main-header h1 {
-    font-size: 42px;
-    font-weight: 700;
-    margin-bottom: 0.3rem;
-}
-.main-header p {
-    font-size: 16px;
-    opacity: 0.85;
-    margin: 0;
-}
-.upload-section {
-    border: 2px dashed #666;
-    border-radius: 12px;
-    padding: 2rem;
-    background-color: #121212;
-    text-align: center;
-    margin-bottom: 1.5rem;
-}
-.feedback-section {
-    background: #111;
-    border: 1px solid #333;
-    border-radius: 10px;
-    padding: 1.5rem;
-    margin-top: 1rem;
-}
-.metric-container {
-    background: #1a1a1a;
-    border-radius: 12px;
-    padding: 1rem;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-    margin-bottom: 1rem;
-}
-.score-excellent { border-left: 5px solid #28a745; }
-.score-good { border-left: 5px solid #17a2b8; }
-.score-average { border-left: 5px solid #ffc107; }
-.score-poor { border-left: 5px solid #dc3545; }
-button[kind="primary"] {
-    background: linear-gradient(90deg, #667eea, #764ba2);
-    color: white;
-    border: none;
-    padding: 0.75rem 1.5rem;
-    font-weight: bold;
-    border-radius: 8px;
-}
-</style>
-""", unsafe_allow_html=True)
+# === CSS Styling ===
+with open("scorescope_custom.css") as f:
+    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 # === Default Categories ===
 DEFAULT_CATEGORIES = {
