@@ -1,66 +1,460 @@
-/* === ScoreScope Branding === */
-body {
-    background-color: #000000;
+/* ScoreScope AI - Portfolio Grade Styling */
+
+/* Hide all Streamlit branding and UI elements */
+#MainMenu {visibility: hidden;}
+.stDeployButton {display: none;}
+footer {visibility: hidden;}
+.stApp > header {visibility: hidden;}
+header[data-testid="stHeader"] {visibility: hidden;}
+
+/* Import Figtree font family */
+@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800&display=swap');
+
+/* Global app styling */
+.stApp {
+    background: #000000;
     font-family: 'Figtree', sans-serif;
-    color: #FFFFFF;
-    margin: 0;
+    color: #ffffff;
 }
 
-/* Headings */
-h1, h2, h3, h4 {
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
     font-family: 'Figtree', sans-serif;
-    color: #FFFFFF;
-    margin-bottom: 0.5rem;
+    color: #ffffff;
+    font-weight: 700;
 }
 
 h1 {
-    font-size: 70px;
-    font-weight: 700;
+    font-size: 48px;
+    font-weight: 800;
     letter-spacing: -1px;
+    background: linear-gradient(135deg, #ffffff 0%, rgba(255, 255, 255, 0.8) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
-/* Paragraphs and smaller text */
-p, label, span {
-    color: #8A8181;
-    font-size: 16px;
+h2 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #ffffff;
 }
 
-/* === Buttons === */
-button {
-    background: linear-gradient(90deg, #814AC8, #667eea);
-    color: #ffffff !important;
-    font-family: 'Figtree', sans-serif;
+h3 {
+    font-size: 24px;
     font-weight: 600;
-    border: none;
-    border-radius: 8px;
-    padding: 0.75rem 1.5rem;
+    color: #ffffff;
+}
+
+p, span, div {
+    color: rgba(255, 255, 255, 0.8);
     font-size: 16px;
-    transition: all 0.3s ease;
+    line-height: 1.6;
 }
 
-button:hover {
-    background: linear-gradient(90deg, #6f3ab2, #566bdc);
-    transform: scale(1.02);
-    cursor: pointer;
+/* Main container styling */
+.block-container {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+    max-width: 1200px !important;
 }
 
-/* === Inputs === */
-input[type="file"], textarea, input[type="text"] {
-    background-color: #111111 !important;
+/* Card containers */
+.content-card {
+    background: rgba(20, 20, 20, 0.9);
+    border: 1px solid rgba(129, 74, 200, 0.3);
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 24px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.content-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(129, 74, 200, 0.5), transparent);
+}
+
+/* Enhanced button styling */
+.stButton > button {
+    background: linear-gradient(135deg, #814AC8 0%, #5B4FC7 100%) !important;
     color: white !important;
-    border: 1px solid #814AC8 !important;
-    border-radius: 6px !important;
-    padding: 0.5rem;
-    font-family: 'Figtree', sans-serif;
-    font-size: 14px;
+    border: none !important;
+    border-radius: 12px !important;
+    padding: 16px 32px !important;
+    font-weight: 700 !important;
+    font-size: 16px !important;
+    font-family: 'Figtree', sans-serif !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 8px 32px rgba(129, 74, 200, 0.3) !important;
+    width: 100% !important;
+    height: 56px !important;
+    letter-spacing: 0.5px !important;
 }
 
-/* === Layout === */
-section.main > div {
-    padding: 2rem;
+.stButton > button:hover {
+    transform: translateY(-3px) !important;
+    box-shadow: 0 12px 40px rgba(129, 74, 200, 0.4) !important;
+    background: linear-gradient(135deg, #9557e5 0%, #6f4fc7 100%) !important;
 }
 
-/* Optional: Adjust sidebar font */
-.sidebar .css-1v3fvcr {
-    font-family: 'Figtree', sans-serif;
+.stButton > button:active {
+    transform: translateY(-1px) !important;
+}
+
+/* Enhanced input styling */
+.stTextArea textarea {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(129, 74, 200, 0.4) !important;
+    border-radius: 12px !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-family: 'Figtree', sans-serif !important;
+    font-size: 15px !important;
+    line-height: 1.6 !important;
+    padding: 16px !important;
+    transition: all 0.3s ease !important;
+}
+
+.stTextArea textarea:focus {
+    border-color: #814AC8 !important;
+    box-shadow: 0 0 0 3px rgba(129, 74, 200, 0.2) !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+}
+
+.stTextArea label {
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-weight: 600 !important;
+    font-size: 16px !important;
+    margin-bottom: 8px !important;
+}
+
+/* File uploader styling */
+.stFileUploader > div {
+    background: rgba(129, 74, 200, 0.08) !important;
+    border: 2px dashed rgba(129, 74, 200, 0.4) !important;
+    border-radius: 16px !important;
+    padding: 32px !important;
+    text-align: center !important;
+    transition: all 0.3s ease !important;
+}
+
+.stFileUploader:hover > div {
+    border-color: #814AC8 !important;
+    background: rgba(129, 74, 200, 0.12) !important;
+    transform: translateY(-2px) !important;
+}
+
+.stFileUploader label {
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-weight: 600 !important;
+    font-size: 16px !important;
+}
+
+/* Score display styling */
+.metric-container {
+    background: rgba(129, 74, 200, 0.1);
+    border: 1px solid rgba(129, 74, 200, 0.3);
+    border-radius: 20px;
+    padding: 32px;
+    text-align: center;
+    margin: 24px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.metric-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #814AC8, #A855F7, #814AC8);
+}
+
+/* Progress bar styling */
+.stProgress > div > div {
+    background: linear-gradient(90deg, #814AC8, #A855F7) !important;
+    border-radius: 10px !important;
+    height: 8px !important;
+}
+
+.stProgress > div {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-radius: 10px !important;
+    height: 8px !important;
+}
+
+/* Alert styling */
+.stSuccess {
+    background: rgba(76, 175, 80, 0.1) !important;
+    border: 1px solid rgba(76, 175, 80, 0.3) !important;
+    border-radius: 12px !important;
+    color: #4CAF50 !important;
+    font-weight: 600 !important;
+}
+
+.stInfo {
+    background: rgba(33, 150, 243, 0.1) !important;
+    border: 1px solid rgba(33, 150, 243, 0.3) !important;
+    border-radius: 12px !important;
+    color: #2196F3 !important;
+    font-weight: 600 !important;
+}
+
+.stError {
+    background: rgba(244, 67, 54, 0.1) !important;
+    border: 1px solid rgba(244, 67, 54, 0.3) !important;
+    border-radius: 12px !important;
+    color: #F44336 !important;
+    font-weight: 600 !important;
+}
+
+.stWarning {
+    background: rgba(255, 193, 7, 0.1) !important;
+    border: 1px solid rgba(255, 193, 7, 0.3) !important;
+    border-radius: 12px !important;
+    color: #FFC107 !important;
+    font-weight: 600 !important;
+}
+
+/* Sidebar styling */
+.stSidebar {
+    background: rgba(10, 10, 10, 0.95) !important;
+    border-right: 1px solid rgba(129, 74, 200, 0.2) !important;
+}
+
+.stSidebar .stSelectbox label,
+.stSidebar .stCheckbox label,
+.stSidebar .stTextInput label,
+.stSidebar .stNumberInput label,
+.stSidebar .stSlider label {
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-weight: 600 !important;
+    font-size: 14px !important;
+}
+
+.stSidebar .stSelectbox > div > div {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(129, 74, 200, 0.3) !important;
+    border-radius: 8px !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.stSidebar .stTextInput > div > div > input {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(129, 74, 200, 0.3) !important;
+    border-radius: 8px !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-family: 'Figtree', sans-serif !important;
+}
+
+.stSidebar .stNumberInput > div > div > input {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(129, 74, 200, 0.3) !important;
+    border-radius: 8px !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-family: 'Figtree', sans-serif !important;
+}
+
+/* Download button styling */
+.stDownloadButton > button {
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 12px 24px !important;
+    font-weight: 600 !important;
+    font-family: 'Figtree', sans-serif !important;
+    transition: all 0.3s ease !important;
+}
+
+.stDownloadButton > button:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.3) !important;
+}
+
+/* Expander styling */
+.streamlit-expanderHeader {
+    background: rgba(255, 255, 255, 0.03) !important;
+    border-radius: 8px !important;
+    border: 1px solid rgba(129, 74, 200, 0.2) !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-weight: 600 !important;
+}
+
+.streamlit-expanderHeader:hover {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border-color: rgba(129, 74, 200, 0.4) !important;
+}
+
+/* Metric styling */
+.stMetric {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(129, 74, 200, 0.2);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+}
+
+.stMetric [data-testid="metric-container"] {
+    background: transparent;
+    border: none;
+}
+
+.stMetric [data-testid="metric-container"] > div {
+    color: #814AC8 !important;
+    font-weight: 700 !important;
+    font-size: 24px !important;
+}
+
+.stMetric [data-testid="metric-container"] > div + div {
+    color: rgba(255, 255, 255, 0.7) !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+}
+
+/* DataFrame styling */
+.stDataFrame {
+    background: rgba(20, 20, 20, 0.9);
+    border-radius: 12px;
+    border: 1px solid rgba(129, 74, 200, 0.2);
+    overflow: hidden;
+}
+
+.stDataFrame [data-testid="stDataFrame"] {
+    background: transparent;
+}
+
+.stDataFrame table {
+    background: transparent !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.stDataFrame th {
+    background: rgba(129, 74, 200, 0.1) !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-weight: 600 !important;
+    border-bottom: 1px solid rgba(129, 74, 200, 0.3) !important;
+}
+
+.stDataFrame td {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Chart container */
+.stPlotlyChart {
+    background: transparent !important;
+    border-radius: 16px !important;
+}
+
+/* Custom animations */
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Processing animation */
+.processing-container {
+    text-align: center;
+    padding: 40px;
+    background: rgba(129, 74, 200, 0.05);
+    border-radius: 16px;
+    border: 1px solid rgba(129, 74, 200, 0.2);
+    margin: 24px 0;
+    animation: fadeIn 0.5s ease-in;
+}
+
+.processing-text {
+    font-size: 18px;
+    color: #814AC8;
+    font-weight: 600;
+    margin-bottom: 16px;
+    animation: pulse 2s infinite;
+}
+
+/* Results container with animation */
+.results-container {
+    animation: slideIn 0.6s ease-out;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .block-container {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+    
+    h1 {
+        font-size: 36px;
+    }
+    
+    h2 {
+        font-size: 28px;
+    }
+    
+    h3 {
+        font-size: 22px;
+    }
+    
+    .content-card {
+        padding: 24px;
+    }
+    
+    .metric-container {
+        padding: 24px;
+    }
+    
+    .stButton > button {
+        height: 48px !important;
+        font-size: 14px !important;
+    }
+}
+
+/* Small screen adjustments */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 28px;
+    }
+    
+    .content-card {
+        padding: 20px;
+    }
+    
+    .stTextArea textarea {
+        font-size: 14px !important;
+    }
+}
+
+/* Focus states for accessibility */
+.stButton > button:focus,
+.stTextArea textarea:focus,
+.stFileUploader:focus,
+.stSelectbox:focus,
+.stDownloadButton > button:focus {
+    outline: 2px solid #814AC8 !important;
+    outline-offset: 2px !important;
 }
