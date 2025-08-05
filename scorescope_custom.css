@@ -19,17 +19,23 @@ p, label, span {
     color: #8A8181;
 }
 
-button[kind="primary"] {
-    background: linear-gradient(90deg, #667eea, #764ba2);
+/* Apply to all Streamlit buttons */
+button {
+    background: linear-gradient(90deg, #814AC8, #667eea);
     color: #ffffff !important;
+    font-weight: 600;
     border: none;
-    padding: 0.75rem 1.5rem;
-    font-weight: bold;
     border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    transition: background 0.3s ease;
 }
-.stButton > button {
-    color: #ffffff !important;
+
+/* Optional: button hover effect */
+button:hover {
+    background: linear-gradient(90deg, #6f3ab2, #566bdc);
+    cursor: pointer;
 }
+
 
 input[type="file"], textarea {
     background-color: #111111 !important;
