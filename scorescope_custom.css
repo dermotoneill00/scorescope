@@ -19,11 +19,16 @@ p, label, span {
     color: #8A8181;
 }
 
-button {
-    background-color: #814AC8 !important;
-    color: white !important;
-    border-radius: 6px !important;
+button[kind="primary"] {
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    color: #ffffff !important;
+    border: none;
+    padding: 0.75rem 1.5rem;
     font-weight: bold;
+    border-radius: 8px;
+}
+.stButton > button {
+    color: #ffffff !important;
 }
 
 input[type="file"], textarea {

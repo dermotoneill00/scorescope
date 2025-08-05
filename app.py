@@ -27,14 +27,6 @@ DEFAULT_CATEGORIES = {
     "Presentation & Format": 10
 }
 
-# === Header ===
-st.markdown("""
-<div class="main-header">
-    <h1>ScoreScope<span style="font-size: 0.6em; vertical-align: super; font-weight: normal;">ai</span></h1>
-    <p>Upload your work and get comprehensive, AI-powered evaluation with actionable insights</p>
-</div>
-""", unsafe_allow_html=True)
-
 # === Sidebar Configuration ===
 with st.sidebar:
     st.header("Configuration")
